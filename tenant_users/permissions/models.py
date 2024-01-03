@@ -129,6 +129,11 @@ class UserTenantPermissions(PermissionsMixin, AbstractBaseUserFacade):
         ),
     )
 
+    admin_meta = {
+        'list_display': ('__str__', 'is_staff', 'is_superuser'),
+        'search_fields': ('profile__username', 'profile__email'),
+    }
+
     def __str__(self):
         """Return string representation."""
         return str(self.profile)
