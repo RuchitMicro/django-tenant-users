@@ -133,7 +133,11 @@ class UserTenantPermissions(PermissionsMixin, AbstractBaseUserFacade):
         'list_display': ('__str__', 'is_staff', 'is_superuser'),
         'search_fields': ('profile__username', 'profile__email'),
     }
-
+    
+    extra_params            =   models.JSONField        (blank=True, null=True, help_text="Extra parameters for the model")
+    created_at              =   models.DateTimeField    (auto_now_add=True, blank=True, null = True)
+    updated_at              =   models.DateTimeField    (auto_now=True, blank=True, null=True)
+    
     def __str__(self):
         """Return string representation."""
         return str(self.profile)
