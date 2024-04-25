@@ -132,6 +132,7 @@ class UserTenantPermissions(PermissionsMixin, AbstractBaseUserFacade):
     admin_meta = {
         'list_display': ('__str__', 'is_staff', 'is_superuser'),
         'search_fields': ('profile__username', 'profile__email'),
+        'api_functions': ('api_get_all_permissions',),
     }
     
     extra_params            =   models.JSONField        (blank=True, null=True, help_text="Extra parameters for the model")
@@ -141,3 +142,8 @@ class UserTenantPermissions(PermissionsMixin, AbstractBaseUserFacade):
     def __str__(self):
         """Return string representation."""
         return str(self.profile)
+    
+    def api_get_all_permissions(self):
+        return self.get_all_permissions()
+
+
