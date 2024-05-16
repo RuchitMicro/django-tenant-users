@@ -132,6 +132,7 @@ class UserTenantPermissions(PermissionsMixin, AbstractBaseUserFacade):
     admin_meta = {
         'list_display': ('__str__', 'is_staff', 'is_superuser'),
         'search_fields': ('profile__username', 'profile__email'),
+        'api_function': ['api_status',],
     }
 
     extra_params            =   models.JSONField        (blank=True, null=True, help_text="Extra parameters for the model")
@@ -142,3 +143,14 @@ class UserTenantPermissions(PermissionsMixin, AbstractBaseUserFacade):
         """Return string representation."""
         return str(self.profile)
     
+    def api_status(self):
+        if self.profile.azure_id is None:
+            if self.profile.is_active is False:
+                return "Inactive"
+            if self.profile.is_active is True:
+                return "Invited"
+        else:
+            if self.profile.is_active is False:
+                return "Inactive"
+            else:
+                return "Active"
